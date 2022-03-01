@@ -1,5 +1,7 @@
 package com.kata.user.model;
 
+import com.kata.user.constants.GenderEnum;
+
 import java.time.LocalDate;
 
 public class UserDTO {
@@ -14,12 +16,12 @@ public class UserDTO {
 
     private String phone;
 
-    private String gender;
+    private GenderEnum gender;
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String username, LocalDate birthday, String country, String phone, String gender) {
+    public UserDTO(Long id, String username, LocalDate birthday, String country, String phone, GenderEnum gender) {
         this.id = id;
         this.username = username;
         this.birthday = birthday;
@@ -68,11 +70,11 @@ public class UserDTO {
         this.phone = phone;
     }
 
-    public String getGender() {
+    public GenderEnum getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(GenderEnum gender) {
         this.gender = gender;
     }
 }
