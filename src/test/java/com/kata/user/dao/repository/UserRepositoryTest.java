@@ -1,7 +1,7 @@
-package com.kata.user.repository;
+package com.kata.user.dao.repository;
 
 import com.kata.user.constants.GenderEnum;
-import com.kata.user.model.UserDTO;
+import com.kata.user.dao.entity.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void givenUserToAddShouldReturnAddedUser(){
+    public void givenUserToAddShouldReturnAddedUser() {
         // arrange
         String username = "Jack";
         LocalDate birthday = LocalDate.of(1994, 11, 11);

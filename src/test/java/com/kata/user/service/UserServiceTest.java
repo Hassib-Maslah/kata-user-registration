@@ -1,6 +1,7 @@
 package com.kata.user.service;
 
 import com.kata.user.constants.GenderEnum;
+import com.kata.user.dao.repository.UserRepository;
 import com.kata.user.model.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
