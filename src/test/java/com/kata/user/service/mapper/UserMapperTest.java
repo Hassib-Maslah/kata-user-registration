@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -61,7 +62,7 @@ public class UserMapperTest {
     @Test
     void shouldMapUserToUserDTOThenReturnUserDTO() {
         // arrange
-        when(modelMapper.map(any(User.class), any(UserDTO.class))).thenReturn(userDTO);
+        when(modelMapper.map(any(), any())).thenReturn(userDTO);
         // act
         UserDTO userMapped = userMapper.mapToDTO(user);
         // assert
@@ -78,7 +79,7 @@ public class UserMapperTest {
     @Test
     void shouldMapUserDTOToUserThenReturnUser() {
         // arrange
-        when(modelMapper.map(any(UserDTO.class), any(User.class))).thenReturn(user);
+        when(modelMapper.map(any(), any())).thenReturn(user);
         // act
         User userMapped = userMapper.mapToEntity(userDTO);
         // assert
