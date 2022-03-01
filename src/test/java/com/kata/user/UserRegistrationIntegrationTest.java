@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -25,9 +26,10 @@ class UserRegistrationIntegrationTest {
         // arrange
         UserDTO request = new UserDTO();
         // act
-        ResponseEntity<UserDTO> response = testRestTemplate.postForEntity("/user-management/users", request, UserDTO.class);
+        ResponseEntity<UserDTO> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, request, UserDTO.class);
         // assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isNotNull();
         assertThat(response.getBody().getUsername()).isEqualTo(request.getUsername());
     }
