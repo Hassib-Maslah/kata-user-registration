@@ -31,7 +31,7 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void makeDeposit_shouldReturnsTrue() throws Exception {
+    public void makeUserRegistration_shouldRegisteredUser() throws Exception {
         Long userId = 1L;
         String username = "john";
         LocalDate birthday =  LocalDate.of(1990, 2, 2);
