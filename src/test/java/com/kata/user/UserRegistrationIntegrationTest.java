@@ -1,5 +1,6 @@
 package com.kata.user;
 
+import com.kata.user.model.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ class UserRegistrationIntegrationTest {
     @Test
     void makeUserRegistration_returnsRegisteredUser() {
         // arrange
-        UserRegistrationDTO request = new UserRegistrationDTO();
+        UserDTO request = new UserDTO();
         // act
-        ResponseEntity<UserRegistrationDTO> response = testRestTemplate.postForEntity("/user-management/users", request, UserRegistrationDTO.class);
+        ResponseEntity<UserDTO> response = testRestTemplate.postForEntity("/user-management/users", request, UserDTO.class);
         // assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody().getId()).isNotNull();
