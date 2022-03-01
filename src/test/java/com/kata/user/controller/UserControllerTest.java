@@ -1,6 +1,8 @@
 package com.kata.user.controller;
 
+import com.kata.user.constants.GenderEnum;
 import com.kata.user.model.UserDTO;
+import com.kata.user.service.UserService;
 import com.kata.user.utils.JsonUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,8 +19,7 @@ import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(UserController.class)
@@ -31,13 +32,13 @@ public class UserControllerTest {
     private UserService userService;
 
     @Test
-    public void makeUserRegistration_shouldRegisteredUser() throws Exception {
+    public void makeUserRegistrationShouldRegisterUser() throws Exception {
         Long userId = 1L;
         String username = "john";
         LocalDate birthday =  LocalDate.of(1990, 2, 2);
         String country = "France";
         String phone = "0033143485548";
-        String gender = "Mr";
+        GenderEnum gender = GenderEnum.MALE;
 
         UserDTO user = new UserDTO(userId, username, birthday, country, phone, gender);
 
@@ -55,12 +56,13 @@ public class UserControllerTest {
                         .content(JsonUtils.toJson(userToSave))
                 )
                 .andExpect(status().isCreated())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(userId))
                 .andExpect(jsonPath("$.username").value(birthday))
                 .andExpect(jsonPath("$.country").value(country))
                 .andExpect(jsonPath("$.phone").value(phone))
-                .andExpect(jsonPath("$.gender").value(gender));
+                .andExpect(jsonPath("$.gender").value(gender.name()));
     }
 
 
