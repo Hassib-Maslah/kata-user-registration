@@ -59,7 +59,8 @@ public class UserControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(userId))
-                .andExpect(jsonPath("$.username").value(birthday))
+                .andExpect(jsonPath("$.username").value(username))
+                .andExpect(jsonPath("$.birthday").value(birthday.toString()))
                 .andExpect(jsonPath("$.country").value(country))
                 .andExpect(jsonPath("$.phone").value(phone))
                 .andExpect(jsonPath("$.gender").value(gender.name()));
