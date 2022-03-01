@@ -3,6 +3,7 @@ package com.kata.user.service.impl;
 import com.kata.user.dao.repository.UserRepository;
 import com.kata.user.model.UserDTO;
 import com.kata.user.service.UserService;
+import com.kata.user.service.mapper.UserMapper;
 import org.springframework.stereotype.Service;
 
 @Service
