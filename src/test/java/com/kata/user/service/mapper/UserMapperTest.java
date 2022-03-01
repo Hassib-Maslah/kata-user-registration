@@ -3,23 +3,21 @@ package com.kata.user.service.mapper;
 import com.kata.user.constants.GenderEnum;
 import com.kata.user.dao.entity.User;
 import com.kata.user.model.UserDTO;
+import com.kata.user.service.mapper.impl.UserMapperImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserMapperTest {
@@ -27,8 +25,6 @@ public class UserMapperTest {
     @Mock
     private ModelMapper modelMapper;
 
-    @Autowired
-    @InjectMocks
     private UserMapper userMapper;
 
     private UserDTO userDTO;
@@ -37,6 +33,8 @@ public class UserMapperTest {
 
     @BeforeEach
     public void setUp() {
+        // initialize user mapper
+        userMapper = new UserMapperImpl(modelMapper);
         // initialize users for test
         String username = "James";
         LocalDate birthday = LocalDate.of(1993, 10, 22);
@@ -66,9 +64,7 @@ public class UserMapperTest {
         // act
         UserDTO userMapped = userMapper.mapToDTO(user);
         // assert
-        verify(userMapper, times(1)).mapToDTO(any());
         assertNotNull(userMapped);
-        assertThat(userMapped.getId()).isNotNull();
         assertEquals(userMapped.getUsername(), userDTO.getUsername());
         assertEquals(userMapped.getBirthday(), userDTO.getBirthday());
         assertEquals(userMapped.getCountry(), userDTO.getCountry());
@@ -83,9 +79,7 @@ public class UserMapperTest {
         // act
         User userMapped = userMapper.mapToEntity(userDTO);
         // assert
-        verify(userMapper, times(1)).mapToEntity(any());
         assertNotNull(userMapped);
-        assertThat(userMapped.getId()).isNotNull();
         assertEquals(userMapped.getUsername(), user.getUsername());
         assertEquals(userMapped.getBirthday(), user.getBirthday());
         assertEquals(userMapped.getCountry(), user.getCountry());

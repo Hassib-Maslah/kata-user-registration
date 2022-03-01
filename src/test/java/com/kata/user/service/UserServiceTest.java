@@ -1,22 +1,23 @@
 package com.kata.user.service;
 
 import com.kata.user.constants.GenderEnum;
-import com.kata.user.dao.repository.UserRepository;
 import com.kata.user.dao.entity.User;
+import com.kata.user.dao.repository.UserRepository;
 import com.kata.user.model.UserDTO;
+import com.kata.user.service.impl.UserServiceImpl;
+import com.kata.user.service.mapper.UserMapper;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
@@ -24,9 +25,15 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Autowired
-    @InjectMocks
+    @Mock
+    private UserMapper userMapper;
+
     private UserService userService;
+
+    @BeforeEach
+    public void setUp() {
+        userService = new UserServiceImpl(userRepository, userMapper);
+    }
 
     @Test
     void shouldSaveUserThenReturnRegisteredUser() {
@@ -38,20 +45,21 @@ public class UserServiceTest {
         GenderEnum gender = GenderEnum.FEMALE;
         User user = new User(username, birthday, country, phone, gender);
 
-        when(userRepository.save(any())).thenReturn(user);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(username);
+        userDTO.setBirthday(birthday);
+        userDTO.setCountry(country);
+        userDTO.setPhone(phone);
+        userDTO.setGender(gender);
 
-        UserDTO userToSave = new UserDTO();
-        userToSave.setUsername(username);
-        userToSave.setBirthday(birthday);
-        userToSave.setCountry(country);
-        userToSave.setPhone(phone);
-        userToSave.setGender(gender);
+        when(userRepository.save(any())).thenReturn(user);
+        when(userMapper.mapToDTO(any())).thenReturn(userDTO);
+        when(userMapper.mapToEntity(any())).thenReturn(user);
+
         // act
-        UserDTO savedUser = userService.save(userToSave);
+        UserDTO savedUser = userService.save(userDTO);
         // assert
-        verify(userService, times(1)).save(any());
         assertNotNull(savedUser);
-        assertThat(savedUser.getId()).isNotNull();
         assertThat(savedUser.getUsername()).isEqualTo(username);
         assertThat(savedUser.getBirthday()).isEqualTo(birthday);
         assertThat(savedUser.getCountry()).isEqualTo(country);
