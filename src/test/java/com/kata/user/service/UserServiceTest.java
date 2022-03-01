@@ -2,6 +2,7 @@ package com.kata.user.service;
 
 import com.kata.user.constants.GenderEnum;
 import com.kata.user.dao.repository.UserRepository;
+import com.kata.user.dao.entity.User;
 import com.kata.user.model.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,29 +31,27 @@ public class UserServiceTest {
     @Test
     void shouldSaveUserThenReturnRegisteredUser() {
         // arrange
-        Long userId = 2L;
         String username = "Emilie";
         LocalDate birthday = LocalDate.of(1993, 10, 22);
         String country = "France";
         String phone = "0033773125888";
         GenderEnum gender = GenderEnum.FEMALE;
-        UserDTO user = new UserDTO(userId, username, birthday, country, phone, gender);
+        User user = new User(username, birthday, country, phone, gender);
 
         when(userRepository.save(any())).thenReturn(user);
 
         UserDTO userToSave = new UserDTO();
-        user.setUsername(username);
-        user.setBirthday(birthday);
-        user.setCountry(country);
-        user.setPhone(phone);
-        user.setGender(gender);
+        userToSave.setUsername(username);
+        userToSave.setBirthday(birthday);
+        userToSave.setCountry(country);
+        userToSave.setPhone(phone);
+        userToSave.setGender(gender);
         // act
-
         UserDTO savedUser = userService.save(userToSave);
         // assert
         verify(userService, times(1)).save(any());
         assertNotNull(savedUser);
-        assertThat(savedUser.getId()).isEqualTo(userId);
+        assertThat(savedUser.getId()).isNotNull();
         assertThat(savedUser.getUsername()).isEqualTo(username);
         assertThat(savedUser.getBirthday()).isEqualTo(birthday);
         assertThat(savedUser.getCountry()).isEqualTo(country);
