@@ -1,6 +1,6 @@
 package com.kata.user.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class UserDTO {
 
@@ -8,18 +8,18 @@ public class UserDTO {
 
     private String username;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
     private String country;
 
-    private Long phone;
+    private String phone;
 
     private String gender;
 
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String username, LocalDateTime birthday, String country, Long phone, String gender) {
+    public UserDTO(Long id, String username, LocalDate birthday, String country, String phone, String gender) {
         this.id = id;
         this.username = username;
         this.birthday = birthday;
@@ -44,11 +44,11 @@ public class UserDTO {
         this.username = username;
     }
 
-    public LocalDateTime getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDateTime birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -60,11 +60,11 @@ public class UserDTO {
         this.country = country;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
