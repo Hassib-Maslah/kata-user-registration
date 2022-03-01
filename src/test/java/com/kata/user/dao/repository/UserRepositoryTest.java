@@ -13,9 +13,6 @@ import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -37,7 +34,6 @@ public class UserRepositoryTest {
         // act
         User savedUser = userRepository.save(user);
         // assert
-        verify(userRepository, times(1)).save(any());
         assertNotNull(savedUser);
         assertThat(savedUser.getId()).isNotNull();
         assertThat(savedUser.getUsername()).isEqualTo(username);
