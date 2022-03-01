@@ -1,5 +1,6 @@
 package com.kata.user;
 
+import com.kata.user.constants.GenderEnum;
 import com.kata.user.model.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +10,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.time.LocalDate;
 
 import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,16 +25,30 @@ class UserRegistrationIntegrationTest {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    void makeUserRegistration_returnsRegisteredUser() {
+    void makeUserRegistrationReturnsRegisteredUser() {
         // arrange
-        UserDTO request = new UserDTO();
+        String username = "Sam";
+        LocalDate birthday =  LocalDate.of(1983, 5, 25);
+        String country = "France";
+        String phone = "0033558693741";
+        GenderEnum gender = GenderEnum.MALE;
+        UserDTO user = new UserDTO();
+        user.setUsername(username);
+        user.setBirthday(birthday);
+        user.setCountry(country);
+        user.setPhone(phone);
+        user.setGender(gender);
         // act
-        ResponseEntity<UserDTO> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, request, UserDTO.class);
+        ResponseEntity<UserDTO> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, user, UserDTO.class);
         // assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isNotNull();
-        assertThat(response.getBody().getUsername()).isEqualTo(request.getUsername());
+        assertThat(response.getBody().getUsername()).isEqualTo(username);
+        assertThat(response.getBody().getBirthday()).isEqualTo(birthday);
+        assertThat(response.getBody().getCountry()).isEqualTo(country);
+        assertThat(response.getBody().getPhone()).isEqualTo(phone);
+        assertThat(response.getBody().getGender()).isEqualTo(gender);
     }
 
 }
