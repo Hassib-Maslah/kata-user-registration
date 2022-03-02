@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 
 import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
+import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_ERROR_MSG;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -46,11 +48,11 @@ public class UserControllerTest {
         given(userService.save(any())).willReturn(user);
 
         UserDTO userToSave = new UserDTO();
-        user.setUsername(username);
-        user.setBirthday(birthday);
-        user.setCountry(country);
-        user.setPhone(phone);
-        user.setGender(gender);
+        userToSave.setUsername(username);
+        userToSave.setBirthday(birthday);
+        userToSave.setCountry(country);
+        userToSave.setPhone(phone);
+        userToSave.setGender(gender);
 
         mockMvc.perform(post(USER_REGISTRATION_API)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -67,5 +69,23 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.gender").value(gender.name()));
     }
 
+    @Test
+    public void makeUserRegistrationShouldReturnsBadRequestWhenMissingRequiredAttributes() throws Exception {
 
+        UserDTO userToSave = new UserDTO();
+        userToSave.setPhone("0033143396693");
+        userToSave.setGender(GenderEnum.FEMALE);
+
+        mockMvc.perform(post(USER_REGISTRATION_API)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.toJson(userToSave))
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.message").value(VALIDATION_ERROR_MSG));
+    }
+
+
+    // todo test validation errors and already exist users (username/birthday/country) should be uniques
 }
