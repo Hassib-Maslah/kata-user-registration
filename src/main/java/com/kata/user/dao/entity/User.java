@@ -41,6 +41,15 @@ public class User {
         this.gender = gender;
     }
 
+    public User(Long id, String username, LocalDate birthday, String country, String phone, GenderEnum gender) {
+        this.id = id;
+        this.username = username;
+        this.birthday = birthday;
+        this.country = country;
+        this.phone = phone;
+        this.gender = gender;
+    }
+
     public Long getId() {
         return id;
     }
