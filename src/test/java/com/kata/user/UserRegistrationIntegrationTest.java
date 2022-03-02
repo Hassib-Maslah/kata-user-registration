@@ -16,8 +16,7 @@ import java.time.LocalDate;
 
 import static com.kata.user.constants.ApiUrlConstant.USERS_API;
 import static com.kata.user.constants.ApiUrlConstant.USERS_DETAILS_API;
-import static com.kata.user.constants.ErrorMessageConstant.ALREADY_EXIST_DATA_ERROR_MSG;
-import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_ERROR_MSG;
+import static com.kata.user.constants.ErrorMessageConstant.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -128,6 +127,24 @@ class UserRegistrationIntegrationTest {
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isNotNull();
     }
+
+    /**
+     * This test method dedicated to test the scenario of get the user details api with unknown user id
+     * that should return a user not found error with appropriate message.
+     */
+    @Test
+    void getUserByIdReturnsNotFoundWhenUserNotFound() {
+        // arrange
+        long userId = 1152;
+        // act
+        ResponseEntity<ErrorResponse> response = testRestTemplate.getForEntity(USERS_DETAILS_API, ErrorResponse.class, userId);
+        // assert
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getMessage()).isNotNull();
+        assertThat(response.getBody().getMessage()).isEqualTo(DATA_NOT_FOUND_ERROR_MSG);
+    }
+
 
 
 }
