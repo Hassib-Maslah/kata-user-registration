@@ -14,5 +14,5 @@ Technologies used in this project are:
 - [JUnit 5](https://junit.org/junit5/)
 
 > **_NOTE:_**
-Please find full documentation in **_docs_** folder.
+Please find full documentation in [**_docs_**](/docs) folder.
 
