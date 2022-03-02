@@ -1,6 +1,7 @@
 package com.kata.user;
 
 import com.kata.user.constants.GenderEnum;
+import com.kata.user.model.ErrorResponse;
 import com.kata.user.model.UserDTO;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
 
 import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
+import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_ERROR_MSG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
@@ -49,6 +51,25 @@ class UserRegistrationIntegrationTest {
         assertThat(response.getBody().getCountry()).isEqualTo(country);
         assertThat(response.getBody().getPhone()).isEqualTo(phone);
         assertThat(response.getBody().getGender()).isEqualTo(gender);
+    }
+
+    @Test
+    void makeUserRegistrationReturnsBadRequest() {
+        // arrange
+        String phone = "0033558693741";
+        GenderEnum gender = GenderEnum.MALE;
+        // create a user without required attributes
+        UserDTO user = new UserDTO();
+        user.setPhone(phone);
+        user.setGender(gender);
+        // act
+        ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, user, ErrorResponse.class);
+        // assert
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getMessage()).isNotNull();
+        assertThat(response.getBody().getMessage()).isEqualTo(VALIDATION_ERROR_MSG);
+        assertThat(response.getBody().getMetaData()).isNotNull();
     }
 
 }
