@@ -14,7 +14,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 
-import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
+import static com.kata.user.constants.ApiUrlConstant.USERS_API;
+import static com.kata.user.constants.ApiUrlConstant.USERS_DETAILS_API;
 import static com.kata.user.constants.ErrorMessageConstant.ALREADY_EXIST_DATA_ERROR_MSG;
 import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_ERROR_MSG;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,7 +50,7 @@ class UserRegistrationIntegrationTest {
         user.setPhone(phone);
         user.setGender(gender);
         // act
-        ResponseEntity<UserDTO> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, user, UserDTO.class);
+        ResponseEntity<UserDTO> response = testRestTemplate.postForEntity(USERS_API, user, UserDTO.class);
         // assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isNotNull();
@@ -74,7 +75,7 @@ class UserRegistrationIntegrationTest {
         user.setPhone(phone);
         user.setGender(gender);
         // act
-        ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, user, ErrorResponse.class);
+        ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(USERS_API, user, ErrorResponse.class);
         // assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         assertThat(response.getBody()).isNotNull();
@@ -85,15 +86,17 @@ class UserRegistrationIntegrationTest {
 
     /**
      * This test method dedicated to test the scenario when trying to save already exist user with same attributes (username, birthday, country)
-     * in the user registration api that should return a conflict error with appropriate message
+     * in the user registration api that should return a conflict error with appropriate message.
+     *
+     * <p>Note: The already exist user is created by {@link com.kata.user.bootstrap.UserBootstrap} class</p>
      */
     @Test
     void makeUserRegistrationReturnsConflictWhenUserAlreadyExist() {
         // arrange
-        String username = "Sam";
-        LocalDate birthday =  LocalDate.of(1983, 5, 25);
+        String username = "Jack";
+        LocalDate birthday =  LocalDate.of(1993, 9, 5);
         String country = "France";
-        String phone = "0033558693741";
+        String phone = "0033633693012";
         GenderEnum gender = GenderEnum.MALE;
         UserDTO user = new UserDTO();
         user.setUsername(username);
@@ -102,13 +105,28 @@ class UserRegistrationIntegrationTest {
         user.setPhone(phone);
         user.setGender(gender);
         // act
-        testRestTemplate.postForEntity(USER_REGISTRATION_API, user, UserDTO.class);
-        ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, user, ErrorResponse.class);
+        ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(USERS_API, user, ErrorResponse.class);
         // assert
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getMessage()).isNotNull();
         assertThat(response.getBody().getMessage()).isEqualTo(ALREADY_EXIST_DATA_ERROR_MSG);
+    }
+
+    /**
+     * This test method dedicated to test the happy path scenario of get user details by id API
+     * that should return a user details successfully
+     */
+    @Test
+    void getUserShouldReturnsUserDetails() {
+        // arrange
+        long userId = 1;
+        // act
+        ResponseEntity<UserDTO> response = testRestTemplate.getForEntity(USERS_DETAILS_API, UserDTO.class, userId);
+        // assert
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getBody()).isNotNull();
+        assertThat(response.getBody().getId()).isNotNull();
     }
 
 
