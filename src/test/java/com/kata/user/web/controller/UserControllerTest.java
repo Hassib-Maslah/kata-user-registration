@@ -4,6 +4,7 @@ import com.kata.user.constants.GenderEnum;
 import com.kata.user.model.UserDTO;
 import com.kata.user.service.UserService;
 import com.kata.user.utils.JsonUtils;
+import com.kata.user.web.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +162,21 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.country").value(country))
                 .andExpect(jsonPath("$.phone").value(phone))
                 .andExpect(jsonPath("$.gender").value(gender.name()));
+    }
+
+    @Test
+    public void getUserShouldReturnsNotFoundErrorWhenPassingUnknownUserId() throws Exception {
+        // prepare the request
+        long userId = 1152;
+
+        given(userService.findById(any())).willThrow(UserNotFoundException.class);
+
+        // invoke and check the received response
+        mockMvc.perform(get(USERS_DETAILS_API, userId))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.message").value(DATA_NOT_FOUND_ERROR_MSG));
     }
 
 }
