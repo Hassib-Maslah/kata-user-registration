@@ -34,6 +34,7 @@ public class UserControllerTest {
 
     @Test
     public void makeUserRegistrationShouldRegisterUser() throws Exception {
+        // prepare a mock for save method in user service class
         Long userId = 1L;
         String username = "john";
         LocalDate birthday = LocalDate.of(1990, 2, 2);
@@ -44,14 +45,14 @@ public class UserControllerTest {
         UserDTO user = new UserDTO(userId, username, birthday, country, phone, gender);
 
         given(userService.save(any())).willReturn(user);
-
+        // prepare a request with all valid and required attributes
         UserDTO userToSave = new UserDTO();
         userToSave.setUsername(username);
         userToSave.setBirthday(birthday);
         userToSave.setCountry(country);
         userToSave.setPhone(phone);
         userToSave.setGender(gender);
-
+        // invoke and check the received response
         mockMvc.perform(post(USER_REGISTRATION_API)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.toJson(userToSave))
@@ -69,7 +70,6 @@ public class UserControllerTest {
 
     @Test
     public void makeUserRegistrationShouldReturnsBadRequestWhenMissingRequiredAttributes() throws Exception {
-
         // prepare a user with missed required attributes (username, country, birthday)
         UserDTO userToSave = new UserDTO();
         userToSave.setPhone("0033143396693");
@@ -93,7 +93,6 @@ public class UserControllerTest {
 
     @Test
     public void makeUserRegistrationShouldReturnsBadRequestWhenPassingInvalidCountry() throws Exception {
-
         // prepare a non French residents (country = Allmagne)
         UserDTO userToSave = new UserDTO();
         userToSave.setUsername("Josh");
@@ -116,7 +115,6 @@ public class UserControllerTest {
 
     @Test
     public void makeUserRegistrationShouldReturnsBadRequestWhenPassingInvalidBirthday() throws Exception {
-
         // prepare a user with a birthday smaller than 18 years
         UserDTO userToSave = new UserDTO();
         userToSave.setUsername("Josh");
