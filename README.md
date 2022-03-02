@@ -17,6 +17,71 @@ mvn spring-boot:run
 ```shell
 ./mvnw spring-boot:run
 ```
+
+The project contains two REST APIs, the first one handle user registration and the second one returns details of a specific user.
+Find below a specification and how to use each of them :
+
+- User Registration API:
+
+URL : ```http://localhost:8080/user-management/users ```
+
+HTTP method: _POST_
+
+Request body schema:
+```json
+{
+  "username" : "string",
+  "birthday" : "xxxx-xx-xx",
+  "country" : "string",
+  "phone" : "string",
+  "gender" : "enum"
+}
+```
+
+> _username_, _birthday_ and _country_ are mandatory and unique.
+
+> _country_ value should be France.
+
+> _birthday_ value should be grater then 18 years.
+
+> _gender_ possible values are MALE, FEMALE or OTHERS.
+
+Success response HTTP status: _201_ (Created)
+
+Success response body schema:
+```json
+{
+  "id" : 1,
+  "username" : "string",
+  "birthday" : "xxxx-xx-xx",
+  "country" : "string",
+  "phone" : "string",
+  "gender" : "enum"
+}
+```
+
+- User Details API:
+
+URL : ```http://localhost:8080/user-management/users/{id} ```
+
+HTTP method: _GET_
+
+Path variable: _id_ (e.g: 1)
+
+Success response HTTP status: _200_ (Ok)
+
+Success response body schema:
+```json
+{
+  "id" : 1,
+  "username" : "string",
+  "birthday" : "xxxx-xx-xx",
+  "country" : "string",
+  "phone" : "string",
+  "gender" : "enum"
+}
+```
+
 ## Developing
 ### Built With
 Technologies used in this project are:
