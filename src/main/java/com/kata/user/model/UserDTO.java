@@ -1,11 +1,13 @@
 package com.kata.user.model;
 
 import com.kata.user.constants.GenderEnum;
+import com.kata.user.utils.validation.CountryConstraint;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
+import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_COUNTRY_MSG;
 import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_MANDATORY_MSG;
 
 public class UserDTO {
@@ -21,6 +23,7 @@ public class UserDTO {
 
     @NotNull
     @NotBlank(message =VALIDATION_MANDATORY_MSG)
+    @CountryConstraint(message = VALIDATION_COUNTRY_MSG)
     private String country;
 
     private String phone;
