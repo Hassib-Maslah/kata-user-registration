@@ -10,6 +10,7 @@ com.kata.user.service.impl
 com.kata.user.service.mapper
 com.kata.user.service.mapper.impl
 com.kata.user.utils
+com.kata.user.utils.logging
 com.kata.user.utils.validation
 com.kata.user.web.controller
 com.kata.user.web.exception
