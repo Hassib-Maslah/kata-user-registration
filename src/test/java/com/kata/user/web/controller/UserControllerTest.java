@@ -16,9 +16,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 
 import static com.kata.user.constants.ApiUrlConstant.USERS_API;
+import static com.kata.user.constants.ApiUrlConstant.USERS_DETAILS_API;
 import static com.kata.user.constants.ErrorMessageConstant.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -133,6 +135,32 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.message").value(VALIDATION_ERROR_MSG))
                 .andExpect(jsonPath("$.metaData").isNotEmpty())
                 .andExpect(jsonPath("$.metaData.birthday").value(VALIDATION_BIRTHDAY_MSG));
+    }
+
+    @Test
+    public void getUserShouldReturnsUserDetails() throws Exception {
+        // prepare a mock for save method in user service class
+        Long userId = 1L;
+        String username = "john";
+        LocalDate birthday = LocalDate.of(1990, 2, 2);
+        String country = "France";
+        String phone = "0033143485548";
+        GenderEnum gender = GenderEnum.MALE;
+
+        UserDTO user = new UserDTO(userId, username, birthday, country, phone, gender);
+
+        given(userService.findById(any())).willReturn(user);
+        // invoke and check the received response
+        mockMvc.perform(get(USERS_DETAILS_API, userId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id").isNotEmpty())
+                .andExpect(jsonPath("$.id").value(userId))
+                .andExpect(jsonPath("$.username").value(username))
+                .andExpect(jsonPath("$.birthday").value(birthday.toString()))
+                .andExpect(jsonPath("$.country").value(country))
+                .andExpect(jsonPath("$.phone").value(phone))
+                .andExpect(jsonPath("$.gender").value(gender.name()));
     }
 
 }
