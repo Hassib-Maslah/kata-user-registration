@@ -14,16 +14,13 @@ public class UserDTO {
 
     private Long id;
 
-    @NotNull
+    @NotNull(message = VALIDATION_MANDATORY_MSG)
     @NotBlank(message = VALIDATION_MANDATORY_MSG)
     private String username;
 
-    @NotNull(message = VALIDATION_MANDATORY_MSG)
     @BirthdayConstraint(message = VALIDATION_BIRTHDAY_MSG)
     private LocalDate birthday;
 
-    @NotNull(message = VALIDATION_MANDATORY_MSG)
-    @NotBlank(message = VALIDATION_MANDATORY_MSG)
     @CountryConstraint(message = VALIDATION_COUNTRY_MSG)
     private String country;
 

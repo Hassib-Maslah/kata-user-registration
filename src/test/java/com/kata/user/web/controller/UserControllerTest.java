@@ -88,9 +88,8 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.message").value(VALIDATION_ERROR_MSG))
                 .andExpect(jsonPath("$.metaData").isNotEmpty())
                 .andExpect(jsonPath("$.metaData.username").value(VALIDATION_MANDATORY_MSG))
-                .andExpect(jsonPath("$.metaData.birthday").value(VALIDATION_MANDATORY_MSG))
-                .andExpect(jsonPath("$.metaData.country").value(VALIDATION_MANDATORY_MSG));
-
+                .andExpect(jsonPath("$.metaData.birthday").value(VALIDATION_BIRTHDAY_MSG))
+                .andExpect(jsonPath("$.metaData.country").value(VALIDATION_COUNTRY_MSG));
     }
 
 
