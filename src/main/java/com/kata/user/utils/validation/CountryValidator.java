@@ -11,9 +11,9 @@ public class CountryValidator implements ConstraintValidator<CountryConstraint, 
     }
 
     @Override
-    public boolean isValid(String contactField, ConstraintValidatorContext cxt) {
+    public boolean isValid(String country, ConstraintValidatorContext cxt) {
 
-        return contactField != null && contactField.equalsIgnoreCase(Locale.FRANCE.getDisplayCountry());
+        return country != null && country.equalsIgnoreCase(Locale.FRANCE.getDisplayCountry());
     }
 
 }

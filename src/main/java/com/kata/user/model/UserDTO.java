@@ -1,14 +1,14 @@
 package com.kata.user.model;
 
 import com.kata.user.constants.GenderEnum;
+import com.kata.user.utils.validation.BirthdayConstraint;
 import com.kata.user.utils.validation.CountryConstraint;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_COUNTRY_MSG;
-import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_MANDATORY_MSG;
+import static com.kata.user.constants.ErrorMessageConstant.*;
 
 public class UserDTO {
 
@@ -19,6 +19,7 @@ public class UserDTO {
     private String username;
 
     @NotNull(message = VALIDATION_MANDATORY_MSG)
+    @BirthdayConstraint(message = VALIDATION_BIRTHDAY_MSG)
     private LocalDate birthday;
 
     @NotNull
