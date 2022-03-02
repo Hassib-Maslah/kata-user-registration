@@ -15,6 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDate;
 
 import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
+import static com.kata.user.constants.ErrorMessageConstant.ALREADY_EXIST_DATA_ERROR_MSG;
 import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_ERROR_MSG;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -84,10 +85,10 @@ class UserRegistrationIntegrationTest {
 
     /**
      * This test method dedicated to test the scenario when trying to save already exist user with same attributes (username, birthday, country)
-     * in the user registration api that should return a bad request error with appropriate message
+     * in the user registration api that should return a conflict error with appropriate message
      */
     @Test
-    void makeUserRegistrationReturnsBadRequestWhenUserAlreadyExist() {
+    void makeUserRegistrationReturnsConflictWhenUserAlreadyExist() {
         // arrange
         String username = "Sam";
         LocalDate birthday =  LocalDate.of(1983, 5, 25);
@@ -104,10 +105,10 @@ class UserRegistrationIntegrationTest {
         testRestTemplate.postForEntity(USER_REGISTRATION_API, user, UserDTO.class);
         ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(USER_REGISTRATION_API, user, ErrorResponse.class);
         // assert
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CONFLICT);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getMessage()).isNotNull();
-        assertThat(response.getBody().getMessage()).isEqualTo(VALIDATION_ERROR_MSG);
+        assertThat(response.getBody().getMessage()).isEqualTo(ALREADY_EXIST_DATA_ERROR_MSG);
     }
 
 

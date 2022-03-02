@@ -6,16 +6,23 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = { User.USERNAME_COLUMN_NAME, User.BIRTHDAY_COLUMN_NAME, User.COUNTRY_COLUMN_NAME}) })
 public class User {
+    public final static String USERNAME_COLUMN_NAME = "username";
+    public final static String BIRTHDAY_COLUMN_NAME = "birthday";
+    public final static String COUNTRY_COLUMN_NAME = "country";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(name = USERNAME_COLUMN_NAME)
     private String username;
 
+    @Column(name = BIRTHDAY_COLUMN_NAME)
     private LocalDate birthday;
 
+    @Column(name = COUNTRY_COLUMN_NAME)
     private String country;
 
     private String phone;
