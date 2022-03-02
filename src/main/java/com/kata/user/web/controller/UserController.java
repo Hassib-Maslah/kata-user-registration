@@ -28,7 +28,7 @@ public class UserController {
      * Contains validation of the request body with usage of the {@link Valid} annotation.
      * Invoked with a POST HTTP method.
      * @param user {@link UserDTO}
-     * @return {@link ResponseEntity<UserDTO>}
+     * @return {@link ResponseEntity}
      */
     @PostMapping(USERS_API)
     public ResponseEntity<UserDTO> save(@Valid @RequestBody UserDTO user) {
@@ -40,7 +40,7 @@ public class UserController {
      * This method represent a User details API.
      * Invoked with a GET HTTP method.
      * @param id {@link Long}
-     * @return {@link ResponseEntity<UserDTO>}
+     * @return {@link ResponseEntity}
      */
     @GetMapping(USERS_DETAILS_API)
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {

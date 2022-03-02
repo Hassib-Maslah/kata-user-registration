@@ -33,6 +33,9 @@ public class LoggingAspect {
     /**
      * This method executed after a successful execution of each method in the classes under web/controller package.
      * It contains logging of the input and output of the method.
+     * @param joinPoint {@link JoinPoint}
+     * @param returnValue  {@link Object}
+     * @throws JsonProcessingException {@link JsonProcessingException}
      */
     @AfterReturning(value = "execution(* com.kata.user.web.controller.*.*(..))", returning = "returnValue")
     public void afterReturning(JoinPoint joinPoint, Object returnValue) throws JsonProcessingException {
@@ -47,6 +50,9 @@ public class LoggingAspect {
     /**
      * This method executed after a failed execution of each method in the classes under web/controller package.
      * It contains logging of the input and the error raised by the method.
+     * @param joinPoint {@link JoinPoint}
+     * @param e {@link Exception}
+     * @throws JsonProcessingException {@link JsonProcessingException}
      */
     @AfterThrowing(value = "execution(* com.kata.user.web.controller.*.*(..))", throwing = "e")
     public void afterThrowingAccessDeniedException(JoinPoint joinPoint, Exception e) throws JsonProcessingException {
@@ -59,6 +65,7 @@ public class LoggingAspect {
     /**
      * This method executed after a successful/failed execution of each method in the classes under web/controller package.
      * It contains logging of the method signature and its execution time.
+     * @param joinPoint {@link JoinPoint}
      */
     @After("execution(* com.kata.user.web.controller.*.*(..))")
     public void afterCompletion(JoinPoint joinPoint) {
