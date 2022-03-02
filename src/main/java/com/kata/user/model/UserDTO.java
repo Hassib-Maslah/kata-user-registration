@@ -88,4 +88,15 @@ public class UserDTO {
         this.gender = gender;
     }
 
+    @Override
+    public String toString() {
+        return "UserDTO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", birthday=" + birthday +
+                ", country='" + country + '\'' +
+                ", phone='" + phone + '\'' +
+                ", gender=" + gender +
+                '}';
+    }
 }

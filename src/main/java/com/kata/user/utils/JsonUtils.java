@@ -18,4 +18,11 @@ public final class JsonUtils {
         return mapper.writeValueAsBytes(o);
     }
 
+    public static String toJsonString(Object o) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return mapper.writeValueAsString(o);
+    }
+
 }
