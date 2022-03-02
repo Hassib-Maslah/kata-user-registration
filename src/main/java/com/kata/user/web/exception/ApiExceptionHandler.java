@@ -23,6 +23,12 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handle(UserNotFoundException e) {
+        ErrorResponse response = new ErrorResponse(DATA_NOT_FOUND_ERROR_MSG, e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(BindException.class)
     public ResponseEntity<ErrorResponse> handle(BindException e) {
         ErrorResponse response = new ErrorResponse(VALIDATION_ERROR_MSG, ExceptionUtils.getMappedFieldError(e));

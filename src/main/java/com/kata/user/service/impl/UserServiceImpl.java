@@ -4,6 +4,7 @@ import com.kata.user.dao.repository.UserRepository;
 import com.kata.user.model.UserDTO;
 import com.kata.user.service.UserService;
 import com.kata.user.service.mapper.UserMapper;
+import com.kata.user.web.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,7 +28,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO findById(Long id) {
-        return userMapper.mapToDTO(userRepository.getById(id));
+        UserDTO userDTO;
+
+        try {
+            userDTO = userMapper.mapToDTO(userRepository.getById(id));
+        } catch (Exception e) {
+            throw new UserNotFoundException(e.getMessage());
+        }
+
+        return userDTO;
     }
 
 }
