@@ -1,6 +1,5 @@
 package com.kata.user.web.exception;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.kata.user.model.ErrorResponse;
 import com.kata.user.utils.ExceptionUtils;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,6 +12,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static com.kata.user.constants.ErrorMessageConstant.*;
 
+/**
+ * This is a REST Controller Advice dedicated to handle all types of exception.
+ * Rest Controller Advice’s methods (annotated with {@link ExceptionHandler}) are shared globally across multiple {@link org.springframework.web.bind.annotation.RestController} components to capture exceptions and translate them to HTTP responses.
+ * The {@link ExceptionHandler} annotation indicates which type of Exception we want to handle.
+ * The exception instance and the request will be injected via method arguments.
+ */
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
