@@ -2,16 +2,25 @@ package com.kata.user.model;
 
 import com.kata.user.constants.GenderEnum;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+
+import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_MANDATORY_MSG;
 
 public class UserDTO {
 
     private Long id;
 
+    @NotNull
+    @NotBlank(message = VALIDATION_MANDATORY_MSG)
     private String username;
 
+    @NotNull(message = VALIDATION_MANDATORY_MSG)
     private LocalDate birthday;
 
+    @NotNull
+    @NotBlank(message =VALIDATION_MANDATORY_MSG)
     private String country;
 
     private String phone;
@@ -77,4 +86,5 @@ public class UserDTO {
     public void setGender(GenderEnum gender) {
         this.gender = gender;
     }
+
 }
