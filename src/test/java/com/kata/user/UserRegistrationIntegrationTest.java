@@ -118,13 +118,13 @@ class UserRegistrationIntegrationTest {
      * that should return a user details successfully
      */
     @Test
-    void getUserShouldReturnsUserDetails() {
+    void getUserReturnsUserDetails() {
         // arrange
         long userId = 1;
         // act
         ResponseEntity<UserDTO> response = testRestTemplate.getForEntity(USERS_DETAILS_API, UserDTO.class, userId);
         // assert
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isNotNull();
         assertThat(response.getBody().getId()).isNotNull();
     }

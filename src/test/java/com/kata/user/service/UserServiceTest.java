@@ -67,4 +67,36 @@ public class UserServiceTest {
         assertThat(savedUser.getGender()).isEqualTo(gender);
     }
 
+    @Test
+    void shouldGetUserThenReturnUserDetails() {
+        // arrange
+        Long userId = 1L;
+        String username = "Emilie";
+        LocalDate birthday = LocalDate.of(1993, 10, 22);
+        String country = "France";
+        String phone = "0033773125888";
+        GenderEnum gender = GenderEnum.FEMALE;
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(userId);
+        userDTO.setUsername(username);
+        userDTO.setBirthday(birthday);
+        userDTO.setCountry(country);
+        userDTO.setPhone(phone);
+        userDTO.setGender(gender);
+
+        when(userMapper.mapToDTO(any())).thenReturn(userDTO);
+
+        // act
+        UserDTO retrievedUser = userService.findById(userId);
+        // assert
+        assertNotNull(retrievedUser);
+        assertThat(retrievedUser.getId()).isEqualTo(userId);
+        assertThat(retrievedUser.getUsername()).isEqualTo(username);
+        assertThat(retrievedUser.getBirthday()).isEqualTo(birthday);
+        assertThat(retrievedUser.getCountry()).isEqualTo(country);
+        assertThat(retrievedUser.getPhone()).isEqualTo(phone);
+        assertThat(retrievedUser.getGender()).isEqualTo(gender);
+    }
+
 }
