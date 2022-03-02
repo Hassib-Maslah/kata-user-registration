@@ -1,0 +1,15 @@
+com.kata.user
+com.kata.user.bootstrap
+com.kata.user.config
+com.kata.user.constants
+com.kata.user.dao.entity
+com.kata.user.dao.repository
+com.kata.user.model
+com.kata.user.service
+com.kata.user.service.impl
+com.kata.user.service.mapper
+com.kata.user.service.mapper.impl
+com.kata.user.utils
+com.kata.user.utils.validation
+com.kata.user.web.controller
+com.kata.user.web.exception
