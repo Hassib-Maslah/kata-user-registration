@@ -22,8 +22,8 @@ public class UserDTO {
     @BirthdayConstraint(message = VALIDATION_BIRTHDAY_MSG)
     private LocalDate birthday;
 
-    @NotNull
-    @NotBlank(message =VALIDATION_MANDATORY_MSG)
+    @NotNull(message = VALIDATION_MANDATORY_MSG)
+    @NotBlank(message = VALIDATION_MANDATORY_MSG)
     @CountryConstraint(message = VALIDATION_COUNTRY_MSG)
     private String country;
 

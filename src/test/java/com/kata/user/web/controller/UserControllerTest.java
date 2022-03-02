@@ -4,7 +4,6 @@ import com.kata.user.constants.GenderEnum;
 import com.kata.user.model.UserDTO;
 import com.kata.user.service.UserService;
 import com.kata.user.utils.JsonUtils;
-import com.kata.user.web.controller.UserController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 
 import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
-import static com.kata.user.constants.ErrorMessageConstant.VALIDATION_ERROR_MSG;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.kata.user.constants.ErrorMessageConstant.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,7 +36,7 @@ public class UserControllerTest {
     public void makeUserRegistrationShouldRegisterUser() throws Exception {
         Long userId = 1L;
         String username = "john";
-        LocalDate birthday =  LocalDate.of(1990, 2, 2);
+        LocalDate birthday = LocalDate.of(1990, 2, 2);
         String country = "France";
         String phone = "0033143485548";
         GenderEnum gender = GenderEnum.MALE;
@@ -72,10 +70,11 @@ public class UserControllerTest {
     @Test
     public void makeUserRegistrationShouldReturnsBadRequestWhenMissingRequiredAttributes() throws Exception {
 
+        // prepare a user with missed required attributes (username, country, birthday)
         UserDTO userToSave = new UserDTO();
         userToSave.setPhone("0033143396693");
         userToSave.setGender(GenderEnum.FEMALE);
-
+        // invoke and check the received response
         mockMvc.perform(post(USER_REGISTRATION_API)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.toJson(userToSave))
@@ -83,9 +82,59 @@ public class UserControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").isNotEmpty())
-                .andExpect(jsonPath("$.message").value(VALIDATION_ERROR_MSG));
+                .andExpect(jsonPath("$.message").value(VALIDATION_ERROR_MSG))
+                .andExpect(jsonPath("$.metaData").isNotEmpty())
+                .andExpect(jsonPath("$.metaData.username").value(VALIDATION_MANDATORY_MSG))
+                .andExpect(jsonPath("$.metaData.birthday").value(VALIDATION_MANDATORY_MSG))
+                .andExpect(jsonPath("$.metaData.country").value(VALIDATION_MANDATORY_MSG));
+
     }
 
 
-    // todo test validation errors and already exist users (username/birthday/country) should be uniques
+    @Test
+    public void makeUserRegistrationShouldReturnsBadRequestWhenPassingInvalidCountry() throws Exception {
+
+        // prepare a non French residents (country = Allmagne)
+        UserDTO userToSave = new UserDTO();
+        userToSave.setUsername("Josh");
+        userToSave.setBirthday(LocalDate.of(1990, 2, 2));
+        userToSave.setCountry("Allmagne");
+        userToSave.setPhone("0033589396693");
+        userToSave.setGender(GenderEnum.MALE);
+        // invoke and check the received response
+        mockMvc.perform(post(USER_REGISTRATION_API)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.toJson(userToSave))
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.message").value(VALIDATION_ERROR_MSG))
+                .andExpect(jsonPath("$.metaData").isNotEmpty())
+                .andExpect(jsonPath("$.metaData.country").value(VALIDATION_COUNTRY_MSG));
+    }
+
+    @Test
+    public void makeUserRegistrationShouldReturnsBadRequestWhenPassingInvalidBirthday() throws Exception {
+
+        // prepare a user with a birthday smaller than 18 years
+        UserDTO userToSave = new UserDTO();
+        userToSave.setUsername("Josh");
+        userToSave.setBirthday(LocalDate.of(2015, 2, 2));
+        userToSave.setCountry("France");
+        userToSave.setPhone("0033589396693");
+        userToSave.setGender(GenderEnum.MALE);
+        // invoke and check the received response
+        mockMvc.perform(post(USER_REGISTRATION_API)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtils.toJson(userToSave))
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.message").value(VALIDATION_ERROR_MSG))
+                .andExpect(jsonPath("$.metaData").isNotEmpty())
+                .andExpect(jsonPath("$.metaData.birthday").value(VALIDATION_BIRTHDAY_MSG));
+    }
+
 }
