@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
+import static com.kata.user.constants.ApiUrlConstant.USERS_API;
 
 @RestController
 public class UserController {
@@ -21,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping(USER_REGISTRATION_API)
+    @PostMapping(USERS_API)
     public ResponseEntity<UserDTO> save(@Valid @RequestBody UserDTO user) {
         UserDTO response = userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
-import static com.kata.user.constants.ApiUrlConstant.USER_REGISTRATION_API;
+import static com.kata.user.constants.ApiUrlConstant.USERS_API;
 import static com.kata.user.constants.ErrorMessageConstant.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -53,7 +53,7 @@ public class UserControllerTest {
         userToSave.setPhone(phone);
         userToSave.setGender(gender);
         // invoke and check the received response
-        mockMvc.perform(post(USER_REGISTRATION_API)
+        mockMvc.perform(post(USERS_API)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.toJson(userToSave))
                 )
@@ -75,7 +75,7 @@ public class UserControllerTest {
         userToSave.setPhone("0033143396693");
         userToSave.setGender(GenderEnum.FEMALE);
         // invoke and check the received response
-        mockMvc.perform(post(USER_REGISTRATION_API)
+        mockMvc.perform(post(USERS_API)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.toJson(userToSave))
                 )
@@ -101,7 +101,7 @@ public class UserControllerTest {
         userToSave.setPhone("0033589396693");
         userToSave.setGender(GenderEnum.MALE);
         // invoke and check the received response
-        mockMvc.perform(post(USER_REGISTRATION_API)
+        mockMvc.perform(post(USERS_API)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.toJson(userToSave))
                 )
@@ -123,7 +123,7 @@ public class UserControllerTest {
         userToSave.setPhone("0033589396693");
         userToSave.setGender(GenderEnum.MALE);
         // invoke and check the received response
-        mockMvc.perform(post(USER_REGISTRATION_API)
+        mockMvc.perform(post(USERS_API)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(JsonUtils.toJson(userToSave))
                 )
