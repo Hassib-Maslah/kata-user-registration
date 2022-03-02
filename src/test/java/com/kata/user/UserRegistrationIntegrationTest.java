@@ -54,10 +54,10 @@ class UserRegistrationIntegrationTest {
     }
 
     @Test
-    void makeUserRegistrationReturnsBadRequest() {
+    void makeUserRegistrationReturnsBadRequestWhenMissingRequiredAttributes() {
         // arrange
-        String phone = "0033558693741";
-        GenderEnum gender = GenderEnum.MALE;
+        String phone = "0033789693741";
+        GenderEnum gender = GenderEnum.FEMALE;
         // create a user without required attributes
         UserDTO user = new UserDTO();
         user.setPhone(phone);
