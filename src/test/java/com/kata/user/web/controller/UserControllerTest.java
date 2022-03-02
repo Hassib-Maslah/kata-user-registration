@@ -1,9 +1,10 @@
-package com.kata.user.controller;
+package com.kata.user.web.controller;
 
 import com.kata.user.constants.GenderEnum;
 import com.kata.user.model.UserDTO;
 import com.kata.user.service.UserService;
 import com.kata.user.utils.JsonUtils;
+import com.kata.user.web.controller.UserController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
