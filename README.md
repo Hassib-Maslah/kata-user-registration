@@ -103,6 +103,17 @@ mvn test
 ./mvnw test
 ```
 ## Code Analysis and Coverage
+To configure and view result of code analysis with SonarQube in local environment, follow below steps:
+
+- Run SonarQube server using Docker : 
+```shell 
+docker run --name sonar-server -d -p 9000:9000  -v sonarqube_extensions:/opt/sonarqube/extensions sonarqube
+```
+- Run Sonar analysis and code coverage using Maven:
+```shell 
+mvn verify sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=<replace-with-generated-token>
+```
+
 Below a screenshot of a Sonar Code Analysis and Coverage result, run on local SonarQube server:
 
 ![Sonar screenshot](docs/images/sonar.png)
