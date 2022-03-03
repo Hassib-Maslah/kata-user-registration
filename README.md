@@ -104,6 +104,7 @@ mvn test
 ```
 ## Code Analysis and Coverage
 Below a screenshot of a Sonar Code Analysis and Coverage result, run on local SonarQube server:
+
 ![Sonar screenshot](docs/images/sonar.png)
 
 ## Other documentations support
