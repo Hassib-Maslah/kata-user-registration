@@ -102,6 +102,9 @@ mvn test
 ```shell
 ./mvnw test
 ```
+## Code Analysis and Coverage
+Below a screenshot of a Sonar Code Analysis and Coverage result, run on local SonarQube server:
+![Sonar screenshot](docs/images/sonar.png)
 
 ## Other documentations support
 Please find technical documentation (JavaDoc) and request samples (Postman collection) in [**_docs_**](/docs) folder.
