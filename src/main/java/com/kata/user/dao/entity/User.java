@@ -5,6 +5,9 @@ import com.kata.user.constants.GenderEnum;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * This class is of type Entity, it indicates a class that, at an abstract level, is correlated with a User table in the database. Each object instantiated by this class indicates a row of the table itself.
+ */
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { User.USERNAME_COLUMN_NAME, User.BIRTHDAY_COLUMN_NAME, User.COUNTRY_COLUMN_NAME}) })
 public class User {
