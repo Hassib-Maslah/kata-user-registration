@@ -11,9 +11,9 @@ import java.time.LocalDate;
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { User.USERNAME_COLUMN_NAME, User.BIRTHDAY_COLUMN_NAME, User.COUNTRY_COLUMN_NAME}) })
 public class User {
-    public final static String USERNAME_COLUMN_NAME = "username";
-    public final static String BIRTHDAY_COLUMN_NAME = "birthday";
-    public final static String COUNTRY_COLUMN_NAME = "country";
+    public static final String USERNAME_COLUMN_NAME = "username";
+    public static final String BIRTHDAY_COLUMN_NAME = "birthday";
+    public static final String COUNTRY_COLUMN_NAME = "country";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
