@@ -10,6 +10,9 @@ import java.time.LocalDate;
 
 import static com.kata.user.constants.ErrorMessageConstant.*;
 
+/**
+ * This is a DTO class for user, used as a request or a response in user REST APIs.
+ */
 public class UserDTO {
 
     private Long id;

@@ -2,6 +2,9 @@ package com.kata.user.model;
 
 import java.util.Map;
 
+/**
+ * This class represent a generic error response to be returned by {@link com.kata.user.web.exception.ApiExceptionHandler} when an error occurred in the application.
+ */
 public class ErrorResponse {
 
     private String message;
