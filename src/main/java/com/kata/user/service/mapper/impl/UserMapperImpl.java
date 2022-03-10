@@ -6,6 +6,9 @@ import com.kata.user.service.mapper.UserMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+/**
+ * This is a user mapper implementation class that implements {@link UserMapper} interface to handle mapping between user DTOs and Entities with the help of {@link ModelMapper} class.
+ */
 @Component
 public class UserMapperImpl implements UserMapper {
 

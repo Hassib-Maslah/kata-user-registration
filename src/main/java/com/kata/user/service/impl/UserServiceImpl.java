@@ -7,6 +7,9 @@ import com.kata.user.service.mapper.UserMapper;
 import com.kata.user.web.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * This is a service implementation class that implements {@link UserService} interface to handle business logic for the user management.
+ */
 @Service
 public class UserServiceImpl implements UserService {
 

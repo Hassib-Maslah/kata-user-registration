@@ -2,6 +2,9 @@ package com.kata.user.service;
 
 import com.kata.user.model.UserDTO;
 
+/**
+ * This is a service interface that contains definition of user management methods that should be implemented.
+ */
 public interface UserService {
 
     /**
