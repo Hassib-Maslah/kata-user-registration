@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
+/**
+ * This is a JSON utility class that should contain only static helper methods.
+ */
 public final class JsonUtils {
 
     private JsonUtils() {

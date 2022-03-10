@@ -6,6 +6,9 @@ import org.springframework.validation.FieldError;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is an Exception utility class that should contain only static helper methods.
+ */
 public final class ExceptionUtils {
 
     private ExceptionUtils() {
