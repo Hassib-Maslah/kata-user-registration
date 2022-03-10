@@ -1,5 +1,8 @@
 package com.kata.user.constants;
 
+/**
+ * This class contain only URL constants for REST APIs.
+ */
 public final class ApiUrlConstant {
 
     public final static String USER_PREFIX_API = "/user-management";
