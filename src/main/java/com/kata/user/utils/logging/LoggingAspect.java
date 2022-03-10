@@ -22,6 +22,9 @@ public class LoggingAspect {
     /**
      * This method executed around the execution of each method in the classes under web/controller package.
      * It contains logging of the method signature and its execution time.
+     * @param joinPoint - {@link ProceedingJoinPoint}
+     * @return {@link Object}
+     * @throws Throwable
      */
     @Around("execution(* com.kata.user.web.controller.*.*(..))")
     public Object beforeExecution(ProceedingJoinPoint joinPoint) throws Throwable {
