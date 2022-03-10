@@ -4,6 +4,9 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.Locale;
 
+/**
+ * This Validator class checks that a given country is France.
+ */
 public class CountryValidator implements ConstraintValidator<CountryConstraint, String> {
 
     @Override
